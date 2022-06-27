@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ripple Button</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        font-family: sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        background-color: #000;
+      }
+      .ripple-button {
+        display: grid;
+        place-items: center;
+        font-size: 1.4rem;
+        padding: 1rem 2rem;
+        /* border: 3px solid currentColor; */
+        color: #fff;
+        /* background: linear-gradient(90deg, #a61e4d, #e64980); */
+        background-color: #d6336c;
+        border-radius: 9px;
+        /* text-transform: uppercase; */
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        transition: background 2000ms;
+        cursor: pointer;
+      }
+      .ripple-button::before {
+        content: "";
+        position: absolute;
+        width: 50%;
+        aspect-ratio: 1 / 1;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        /* background-color: #fff;*/
+        /* background: linear-gradient(to right, #e64980, #a61e4d); */
+        /* background: linear-gradient(90deg, #ff6b6b var(--xs) 0%, #d6336c); */
+        background-color: #f03e3e;
+        z-index: -1;
+        opacity: 0.5;
+        top: var(--y);
+        left: var(--x);
+        transition: background 2000ms;
+        filter: blur(10px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ripple-button">Let's jump in</div>
+
+    <script>
+      const rippleButton = document.querySelector(".ripple-button");
+      function mousPositionToCustomProp(event, element) {
+        let posX = event.offsetX;
+        let posY = event.offsetY;
+        element.style.setProperty("--x", posX + "px");
+        element.style.setProperty("--xs", posX - 100 + "%");
+        element.style.setProperty("--y", posY + "px");
+        element.style.setProperty("--ys", posY + "%");
+      }
+      rippleButton.addEventListener("mousemove", (e) => {
+        mousPositionToCustomProp(e, rippleButton);
+      });
+    </script>
+  </body>
+</html>
